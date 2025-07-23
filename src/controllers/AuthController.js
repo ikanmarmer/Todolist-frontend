@@ -46,7 +46,7 @@ const AuthController = create((set) => ({
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
 
-      navigate("/dashboard");
+      navigate("/Dashboard");
     } catch (err) {
       set({ error: err.response?.data?.message || "Terjadi kesalahan" });
       throw err;
