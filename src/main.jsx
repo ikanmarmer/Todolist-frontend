@@ -4,13 +4,13 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import AppRoute from './routes/AppRoute.jsx'
-import Navbar from './components/navbar.jsx'
+import TitleRoute from './routes/TitleRoute.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-    <Navbar />
-    <AppRoute />
+      <AppRoute />
+      <TitleRoute />
     </BrowserRouter>
   </StrictMode>,
 )
