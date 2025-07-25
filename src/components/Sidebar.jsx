@@ -35,20 +35,19 @@ export default function Sidebar({ isOpen, onClose }) {
 
   return (
     <div
-      className={`fixed top-0 left-0 h-screen w-64 md:pt-6 bg-gray-900 text-white flex flex-col justify-between z-50 transition-transform duration-300 ${
+      className={`fixed top-0 left-0 h-screen w-64 bg-gradient-to-br from-cyan-500 to-teal-600  p-2 shadow-inner text-black flex flex-col justify-between z-50 transition-transform duration-300 ${
         isOpen ? 'translate-x-0' : '-translate-x-full'
       } xl:translate-x-0`}
     >
-      <div>
+      <div className="text-black">
         {/* Mobile close button */}
         <div className="flex justify-end xl:hidden p-4">
           <button onClick={onClose} className="text-white text-xl">
             ✕
           </button>
         </div>
-
         {/* Profile */}
-        <div className="flex flex-col items-center px-4 mb-6">
+        <div className="flex flex-col items-center px-4 mb-6 ">
           <img
             src={
               user?.avatar
@@ -58,18 +57,18 @@ export default function Sidebar({ isOpen, onClose }) {
             alt="Profile"
             className="w-24 h-24 rounded-full object-cover border-2 border-yellow-400 mb-2"
           />
-          <p className="text-white font-medium text-sm">Hallo, {user?.name || ''}</p>
+          <p className="text-black font-medium text-sm">Hallo, {user?.name || ''}</p>
         </div>
 
         {/* Navigation Links */}
-        <nav className="px-4">
+        <nav className="px-4 text-black">
           <Link
             to="/dashboard"
             className={
               location.pathname === '/dashboard' ? activeClass : baseClass
             }
           >
-            <i className="fa-regular fa-home"></i> Dashboard
+            <i className="fa-regular fa-home "></i> Dashboard
           </Link>
 
           <Link
@@ -108,8 +107,11 @@ export default function Sidebar({ isOpen, onClose }) {
       <div className="px-4 pb-6">
         <button
           onClick={handleLogout}
-          className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg bg-red-400 text-red-800 hover:text-red-950 hover:bg-red-500 transition"
-        >
+          className="w-full bg-gradient-to-r from-teal-600 to-cyan-700 
+              hover:from-teal-700 hover:to-cyan-800 text-white 
+              font-bold py-3 px-6 rounded-lg transition-all duration-300 
+              transform hover:scale-105 hover:shadow-xl active:scale-95 
+              shadow-lg border border-teal-500 hover:border-teal-400"        >
           <i className="fa-regular fa-left-from-bracket"></i> Logout
         </button>
       </div>

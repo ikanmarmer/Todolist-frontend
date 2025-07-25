@@ -6,8 +6,7 @@ function Home() {
       {/* Hero Section */}
       <section
         className="flex flex-col items-center justify-center text-center px-6 min-h-screen w-full"
-        data-aos="zoom-in"
-        data-aos-duration="1200"
+
       >
         <h2 className="text-6xl font-extrabold text-black mb-4 drop-shadow-2xl" style={{textShadow: '2px 4px 12px rgba(0,0,0,0.3)'}}>
           Get Started
@@ -78,13 +77,13 @@ function Home() {
 
         {/* Team Values */}
         <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl p-12 max-w-4xl text-center mb-16 shadow-lg mx-auto">
-          <h2 className="text-4xl font-bold text-black mb-8" data-aos="fade-down">Built for Everyone</h2>
-          <p className="text-xl text-gray-800 leading-relaxed mb-8" data-aos="fade-up" data-aos-delay="100">
+          <h2 className="text-4xl font-bold text-black mb-8" >Built for Everyone</h2>
+          <p className="text-xl text-gray-800 leading-relaxed mb-8"  >
             Whether you are a busy professional managing complex projects, a student organizing coursework, 
             or someone looking to bring more structure to daily life, Todolist adapts to your needs and 
             grows with your ambitions.
           </p>
-          <div className="flex justify-center space-x-8 text-sm text-gray-700" data-aos="fade-up" data-aos-delay="200">
+          <div className="flex justify-center space-x-8 text-sm text-gray-700" >
             <span className="bg-white bg-opacity-40 px-4 py-2 rounded-full flex items-center gap-2"><span role="img" aria-label="student">🎓</span>Students</span>
             <span className="bg-white bg-opacity-40 px-4 py-2 rounded-full flex items-center gap-2"><span role="img" aria-label="professional">💼</span>Professionals</span>
             <span className="bg-white bg-opacity-40 px-4 py-2 rounded-full flex items-center gap-2"><span role="img" aria-label="team">👥</span>Teams</span>

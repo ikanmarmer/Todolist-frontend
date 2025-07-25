@@ -38,10 +38,10 @@ function Login(){
 
     return(
     <div className="min-h-screen bg-gradient-to-br from-teal-300 via-cyan-300 to-emerald-300 flex items-center justify-center p-4">
-        <div className="bg-gradient-to-br from-cyan-500 to-teal-600 rounded-xl p-4 shadow-inner">
-          <h2 className="text-2xl font-bold text-white text-center mb-6 drop-shadow-lg">Login</h2>
+        <div className="width w-80 max-w-md mx-auto bg-gradient-to-br from-cyan-500 to-teal-600 rounded-xl p-7 shadow-inner">
+          <h2 className="text-2xl font-bold text-white text-center mb-4 drop-shadow-lg">Login</h2>
           
-          <form className="max-w-md mx-auto space-y-4" onSubmit={handleLogin}>
+          <form className=" mx-auto space-y-4" onSubmit={handleLogin}>
             <div className="relative">
               <label className="block text-white text-sm font-medium mb-2 drop-shadow">Email</label>
               <input
@@ -72,7 +72,11 @@ function Login(){
             </div>
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-teal-600 to-cyan-700 hover:from-teal-700 hover:to-cyan-800 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl active:scale-95 shadow-lg border border-teal-500 hover:border-teal-400"
+              className="w-full bg-gradient-to-r from-teal-600 to-cyan-700 
+              hover:from-teal-700 hover:to-cyan-800 text-white 
+              font-bold py-3 px-6 rounded-lg transition-all duration-300 
+              transform hover:scale-105 hover:shadow-xl active:scale-95 
+              shadow-lg border border-teal-500 hover:border-teal-400"
             >
               Login
             </button>
@@ -83,7 +87,10 @@ function Login(){
               Don't have an account?{' '}
               <Link
                 to="/Register"
-                className="text-cyan-100 hover:text-white font-semibold underline hover:no-underline transition-all duration-200 hover:scale-105 inline-block"
+                className="text-cyan-100 hover:text-white font-semibold 
+                underline hover:no-underline 
+                transition-all duration-200 
+                hover:scale-105 inline-block"
               >
                 Sign up
               </Link>

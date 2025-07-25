@@ -139,29 +139,29 @@ function Profile() {
 
   return (
     <>
-      <div className="bg-gray-900 mb-6 py-5 px-5 rounded-md">
+      <div className="bg-gradient-to-br from-cyan-500 to-teal-600 p-7 mb-6 py-5 px-5 shadow-inner rounded-md">
         <h1 className="font-bold text-2xl text-white">My Profile</h1>
       </div>
 
       <div className="grid xl:grid-cols-3 grid-cols-1">
         <div
-          className="bg-gray-900 mb-6 py-5 px-5 rounded-md min-h-[300px] flex items-center justify-center"
+          className="bg-gradient-to-br from-cyan-500 to-teal-600 p-7 shadow-inner mb-6 py-5 px-5 rounded-md min-h-[300px] flex items-center justify-center"
           data-aos="fade-up"
         >
           {loading ? (
-            <span className="w-8 h-8 border-4 border-yellow-400 border-t-transparent rounded-full animate-spin"></span>
+            <span className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></span>
           ) : (
             <form onSubmit={handleSubmit} className="w-full">
               <div className="mb-3">
                 <img
                   src={avatarPreview || "/src/assets/profile-default.png"}
                   alt="avatar"
-                  className="object-cover rounded h-56 w-full shadow"
+                  className="object-cover rounded h-46 w-full shadow"
                 />
               </div>
 
-              <div className="mb-3">
-                <label className="block text-white mb-1">Name</label>
+              <div className="mb-3 relative">
+                <label className="block text-white text-sm font-medium mb-2 drop-shadow">Name</label>
                 <input
                   type="text"
                   value={user.name}
@@ -171,7 +171,7 @@ function Profile() {
                 />
               </div>
 
-              <div className="mb-3">
+              <div className="mb-3 relative">
                 <label className="block text-white mb-1">Email</label>
                 <input
                   type="email"
@@ -182,7 +182,7 @@ function Profile() {
                 />
               </div>
 
-              <div className="mb-3">
+              <div className="mb-3 relative">
                 <label className="block text-white mb-1">Avatar</label>
                 <input
                   type="file"

@@ -57,7 +57,7 @@ function Register(){
 
     return(
     <div className="min-h-screen bg-gradient-to-br from-teal-300 via-cyan-300 to-emerald-300 flex items-center justify-center p-2">
-        <div className="bg-gradient-to-br from-cyan-500 to-teal-600 rounded-xl px-8 py-4 shadow-inner">
+        <div className="width w-80 max-w-md mx-auto bg-gradient-to-br from-cyan-500 to-teal-600 rounded-xl px-8 py-7 shadow-inner">
           <h2 className="text-2xl font-bold text-white text-center mb-6 drop-shadow-lg">Register</h2>
           
           <form className="space-y-4" onSubmit={handleRegister}>
@@ -90,9 +90,7 @@ function Register(){
                 value={form.email}
                 onChange={handleChange}
               />
-            </div>
-            
-                        
+            </div>                        
             <div className="relative">
               <label className="block text-white text-sm font-medium mb-2 drop-shadow">Password</label>
               <input
