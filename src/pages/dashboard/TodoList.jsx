@@ -178,7 +178,7 @@ function TodoList() {
 
   return (
     <>
-      <div className="bg-gray-900 mb-6 py-5 px-5 rounded-md">
+      <div className="bg-gradient-to-br from-cyan-500 to-teal-600 p-7 mb-6 py-5 px-5 shadow-inner rounded-md">
         <h1 className="font-bold text-2xl text-white">Todo List</h1>
       </div>
 

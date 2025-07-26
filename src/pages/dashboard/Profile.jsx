@@ -149,7 +149,7 @@ function Profile() {
           data-aos="fade-up"
         >
           {loading ? (
-            <span className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></span>
+            <span className="w-12 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></span>
           ) : (
             <form onSubmit={handleSubmit} className="w-full">
               <div className="mb-3">
@@ -166,7 +166,7 @@ function Profile() {
                   type="text"
                   value={user.name}
                   onChange={(e) => setUser({ ...user, name: e.target.value })}
-                  className="w-full border border-white text-white px-3 py-1 rounded"
+                  className="input validator w-full px-3 py-1 bg-gradient-to-r from-teal-400 to-cyan-400 border-2 border-teal-300 rounded-lg text-white placeholder-teal-100 focus:outline-none focus:ring-4 focus:ring-cyan-200 focus:border-cyan-200 focus:scale-105 transition-all duration-300 shadow-inset hover:shadow-lg hover:from-teal-350 hover:to-cyan-350"
                   required
                 />
               </div>
@@ -177,7 +177,7 @@ function Profile() {
                   type="email"
                   value={user.email}
                   onChange={(e) => setUser({ ...user, email: e.target.value })}
-                  className="w-full border border-white text-white px-3 py-1 rounded"
+                  className="input validator w-full px-3 py-1 bg-gradient-to-r from-teal-400 to-cyan-400 border-2 border-teal-300 rounded-lg text-white placeholder-teal-100 focus:outline-none focus:ring-4 focus:ring-cyan-200 focus:border-cyan-200 focus:scale-105 transition-all duration-300 shadow-inset hover:shadow-lg hover:from-teal-350 hover:to-cyan-350"
                   required
                 />
               </div>
@@ -188,7 +188,7 @@ function Profile() {
                   type="file"
                   onChange={handleAvatarChange}
                   accept="image/*"
-                  className="w-full border border-white text-white px-3 py-1 rounded"
+                  className="input validator w-full px-3 py-1 bg-gradient-to-r from-teal-400 to-cyan-400 border-2 border-teal-300 rounded-lg text-white placeholder-teal-100 focus:outline-none focus:ring-4 focus:ring-cyan-200 focus:border-cyan-200 focus:scale-105 transition-all duration-300 shadow-inset hover:shadow-lg hover:from-teal-350 hover:to-cyan-350"
                 />
               </div>
 

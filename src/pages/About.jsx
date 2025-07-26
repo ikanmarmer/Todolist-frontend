@@ -4,7 +4,7 @@ function About(){
       {/* Hero Section */}
       <section 
         className="flex flex-col items-center justify-center text-center px-6 min-h-screen w-full">
-        <h1 className="text-7xl font-bold mb-8 leading-tight" style={{textShadow: '2px 4px 12px rgba(0,0,0,0.3)'}}>About Todolist</h1>
+        <h1 className="text-7xl font-bold mb-8 leading-tight" style={{textShadow: '2px 4px 12px rgba(0,0,0,0.3)'}}>About our Todolist</h1>
         <p className="text-xl text-gray-800 mb-6">
           Discover how our powerful task management platform transforms the way you organize, 
           prioritize, and accomplish your daily goals with unprecedented efficiency and clarity.
