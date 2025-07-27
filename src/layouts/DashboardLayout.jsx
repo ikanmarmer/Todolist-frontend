@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import PageTitle from "../routes/PageTitle";
 import { useEffect, useState } from "react";
 import Aos from 'aos';
+import AuthController from "../controllers/AuthController";
 import 'aos/dist/aos.css';
 
 function DashboardLayout() {
@@ -45,11 +46,11 @@ function DashboardLayout() {
       <div className="flex-1">
         {/* Navbar Mobile */}
         <header 
-          className={`fixed top-0 left-0 right-0 z-40 bg-white shadow-md p-4 flex items-center justify-between ${
+          className={`fixed top-0 left-0 right-0 z-40 bg-[#00cfd1] shadow-lg transition-all duration-500 p-4 flex items-center justify-between ${
             forceMobileNav ? 'flex' : 'lg:hidden'
           }`}
         >
-          <div className="text-xl font-bold text-gray-800">Your Logo</div>
+          <div className="text-xl font-bold text-gray-800">Todolist</div>
           
           {/* Tombol hamburger animasi */}
           <button 

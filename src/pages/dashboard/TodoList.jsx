@@ -178,51 +178,62 @@ function TodoList() {
 
   return (
     <>
-      <div className="bg-gradient-to-br from-cyan-500 to-teal-600 p-7 mb-6 py-5 px-5 shadow-inner rounded-md">
+      <div className="bg-gradient-to-br from-cyan-500 to-teal-600 p-7 mb-6 py-5 px-5 shadow-inner rounded-md"
+        data-aos="fade-left">
         <h1 className="font-bold text-2xl text-white">Todo List</h1>
       </div>
 
       <button
-        className="font-medium bg-yellow-400 hover:bg-yellow-500 text-white text-lg px-4 py-2 rounded-md"
+        className="bg-gradient-to-r from-teal-600 to-cyan-700 
+              hover:from-teal-700 hover:to-cyan-800 text-white 
+              font-bold py-3 px-6 rounded-lg transition-all duration-300 
+              transform hover:scale-105 hover:shadow-xl active:scale-95 
+              shadow-lg border border-teal-500 hover:border-teal-400"
         onClick={() => openAddModal()}
       >
-        Tambah Todo
+        Add Todo
       </button>
       {modal && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-6 backdrop-blur">
           <div
-            className="bg-gray-900 rounded-lg shadow-lg p-6 w-full max-w-md"
+            className="bg-gradient-to-br from-cyan-500 to-teal-600 rounded-xl px-8 py-7 shadow-lg p-6 w-full max-w-md"
             data-aos="fade-up"
             data-aos-duration="500"
           >
-            <h2 className="text-xl text-white font-bold mb-4">
-              {editId ? "Edit Todo" : "Tambah Todo"}
+            <h2 className="text-xl text-black font-bold mb-4">
+              {editId ? "Edit Todo" : "Add Todo"}
             </h2>
             <form onSubmit={handleStoreTask}>
               <div className="mb-3">
-                <label className="block text-white mb-1">Judul</label>
+                <label className="block text-black mb-1">Judul</label>
                 <input
                   type="text"
                   name="title"
                   value={form.title}
                   onChange={handleChange}
-                  className="w-full border border-white text-white px-3 py-2 rounded"
+                  className="input validator w-full px-4 py-3 bg-gradient-to-r from-teal-400 to-cyan-400 border-2 
+                border-teal-300 rounded-lg text-black placeholder-teal-100 focus:outline-none 
+                focus:ring-4 focus:ring-cyan-200 focus:border-cyan-200 focus:scale-105 transition-all 
+                duration-300 shadow-inset hover:shadow-lg hover:from-teal-350 hover:to-cyan-350"
                   required
                 />
               </div>
               <div className="mb-3">
-                <label className="block text-white mb-1">Deskripsi</label>
+                <label className="block text-black mb-1">Deskripsi</label>
                 <textarea
                   name="description"
                   value={form.description}
                   onChange={handleChange}
-                  className="w-full border border-white text-white px-3 py-2 rounded"
+                  className="input validator w-full px-4 py-3 bg-gradient-to-r from-teal-400 to-cyan-400 border-2 
+                border-teal-300 rounded-lg text-black placeholder-teal-100 focus:outline-none 
+                focus:ring-4 focus:ring-cyan-200 focus:border-cyan-200 focus:scale-105 transition-all 
+                duration-300 shadow-inset hover:shadow-lg hover:from-teal-350 hover:to-cyan-350"
                   rows="3"
                   required
                 ></textarea>
               </div>
               <div className="mb-3">
-                <label className="block text-white mb-1">
+                <label className="block text-black mb-1">
                   Gambar (opsional)
                 </label>
                 <input
@@ -230,11 +241,14 @@ function TodoList() {
                   name="image"
                   onChange={handleChange}
                   accept="image/*"
-                  className="w-full border border-white text-white px-3 py-2 rounded"
+                  className="input validator w-full px-4 py-3 bg-gradient-to-r from-teal-400 to-cyan-400 border-2 
+                border-teal-300 rounded-lg text-black placeholder-teal-100 focus:outline-none 
+                focus:ring-4 focus:ring-cyan-200 focus:border-cyan-200 focus:scale-105 transition-all 
+                duration-300 shadow-inset hover:shadow-lg hover:from-teal-350 hover:to-cyan-350"
                 />
               </div>
               <div className="mb-3">
-                <label className="block text-white mb-1">
+                <label className="block text-black mb-1">
                   Link Video YouTube (opsional)
                 </label>
                 <input
@@ -242,20 +256,26 @@ function TodoList() {
                   name="video"
                   value={form.video}
                   onChange={handleChange}
-                  className="w-full border border-white text-white px-3 py-2 rounded"
+                  className="input validator w-full px-4 py-3 bg-gradient-to-r from-teal-400 to-cyan-400 border-2 
+                  border-teal-300 rounded-lg text-black placeholder-teal-100 focus:outline-none 
+                    focus:ring-4 focus:ring-cyan-200 focus:border-cyan-200 focus:scale-105 transition-all 
+                    duration-300 shadow-inset hover:shadow-lg hover:from-teal-350 hover:to-cyan-350"
                 />
               </div>
               <div className="flex justify-end gap-3 mt-4">
                 <button
                   type="button"
                   onClick={() => setModal(false)}
-                  className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300"
+                  className="px-4 py-2 bg-gradient-to-r from-teal-400 to-cyan-400 border-2 border-teal-300 rounded-lg text-whit transition-all duration-300 transform hover:scale-105 hover:shadow-xl active:scale-95 shadow-lg  hover:border-teal-400"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded bg-yellow-400 text-white hover:bg-yellow-500"
+                  className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white 
+                    font-medium rounded-lg transition-all duration-300 
+                    transform hover:scale-105 hover:shadow-xl active:scale-95 
+                    shadow-lg border:border-gray-500 hover:border-gray-400"
                 >
                   Simpan
                 </button>
@@ -266,78 +286,88 @@ function TodoList() {
       )}
 
       {loading ? (
-        <div className="bg-gray-900 py-8 px-6 rounded-md text-center mt-6">
+        <div className="bg-gradient-to-br from-cyan-500 to-teal-600 p-7 mb-6 py-5 px-5 shadow-inner rounded-md text-center font-semibold mt-8"
+          >
           <span className="loading loading-spinner text-primary text-3xl"></span>
-          <p className="text-gray-500 mt-4 text-sm">Sedang memuat data...</p>
+          <p className="text-gray-500 mt-4 text-sm">Loading data...</p>
         </div>
       ) : task.length === 0 ? (
-        <div className="bg-gray-900 py-8 px-6 rounded-md text-center mt-6">
-          <p className="text-white text-sm">Belum ada todo.</p>
+        <div className="bg-gradient-to-br from-cyan-500 to-teal-600 p-7 mb-6 py-5 px-5 shadow-inner rounded-md text-center font-semibold mt-4" >
+          <p className="text-white text-sm">no todo yet.</p>
         </div>
       ) : (
-        <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-6 gap-6">
-          {task.map((task) => (
-            <div
-              key={task.id}
-              className="bg-gray-900 rounded-lg p-4 hover:shadow-md cursor-pointer"
-              data-aos="fade-up"
-            >
-              <div className="flex justify-between">
-                <Link
-                  to={`/todo-list-detail/${task.id}`}
-                  className="text-xl font-semibold mb-1 text-white hover:underline w-full"
-                >
-                  {task.title}
-                </Link>
-
-                <div className="flex space-x-3">
-                  <button
-                    className="text-lg font-medium text-primary hover:underline hover:cursor-pointer"
-                    onClick={() => openEditModal(task)}
-                  >
-                    <i className="fa-regular fa-pen-to-square"></i>
-                  </button>
-                  <button
-                    className="text-lg font-medium text-red-600 hover:underline hover:cursor-pointer"
-                    onClick={() => handleDelete(task.id)}
-                  >
-                    <i className="fa-regular fa-trash"></i>
-                  </button>
-                </div>
-              </div>
-              <Link to={`/todo-list-detail/${task.id}`}>
-                <p className="text-gray-200 text-sm mb-2 line-clamp-2">
-                  {task.description}
-                </p>
-                {task.video && extractYouTubeId(task.video) ? (
-                  <div className="mt-3">
-                    <iframe
-                      src={`https://www.youtube.com/embed/${extractYouTubeId(
-                        task.video
-                      )}`}
-                      className="w-full h-48 rounded"
-                      frameBorder="0"
-                      allowFullScreen
-                      title="Video Preview"
-                    ></iframe>
-                  </div>
-                ) : task.image ? (
-                  <img
-                    src={task.image}
-                    alt="Preview"
-                    className="mt-3 w-full h-48 object-cover rounded"
-                  />
-                ) : (
-                  <img
-                    src="/public/default-featured-image.png.jpg"
-                    alt="Preview"
-                    className="mt-3 w-full h-48 object-cover rounded"
-                  />
-                )}
+              <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-6 gap-6">
+        {task.map((task) => (
+          <div
+            key={task.id}
+            className="
+              bg-gradient-to-br from-cyan-500 to-teal-600
+              p-7 mb-6 py-5 px-5
+              shadow-inner rounded-md
+              hover:shadow-lg transition-shadow duration-300
+              cursor-pointer
+            "
+            data-aos="fade-up"
+          >
+            <div className="flex justify-between">
+              <Link
+                to={`/todo-list-detail/${task.id}`}
+                className="text-xl font-semibold mb-1 text-white hover:underline w-full"
+              >
+                {task.title}
               </Link>
+
+              <div className="flex space-x-3">
+                <button
+                  className="text-lg font-medium text-white/90 hover:text-white"
+                  onClick={() => openEditModal(task)}
+                >
+                  <i className="fa-regular fa-pen-to-square"></i>
+                </button>
+                <button
+                  className="text-lg font-medium text-red-300 hover:text-red-400"
+                  onClick={() => handleDelete(task.id)}
+                >
+                  <i className="fa-regular fa-trash-alt"></i>
+                </button>
+              </div>
             </div>
-          ))}
-        </div>
+
+            <Link to={`/todo-list-detail/${task.id}`}>
+              <p className="text-white/80 text-sm mb-2 line-clamp-2">
+                {task.description}
+              </p>
+
+              {task.video && extractYouTubeId(task.video) ? (
+                <div className="mt-3">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${extractYouTubeId(
+                      task.video
+                    )}`}
+                    className="w-full h-48 rounded"
+                    frameBorder="0"
+                    allowFullScreen
+                    title="Video Preview"
+                  />
+                </div>
+              ) : task.image ? (
+                <img
+                  src={task.image}
+                  alt="Preview"
+                  className="mt-3 w-full h-48 object-cover rounded"
+                />
+              ) : (
+                <img
+                  src="/public/default-featured-image.png.jpg"
+                  alt="Preview"
+                  className="mt-3 w-full h-48 object-cover rounded"
+                />
+              )}
+            </Link>
+          </div>
+        ))}
+      </div>
+
       )}
     </>
   );

@@ -79,8 +79,9 @@ function Setting() {
   };
   return (
     <>
-      <div className="bg-gradient-to-br from-cyan-500 to-teal-600 p-7 mb-6 py-5 px-5 shadow-inner rounded-md">
-        <h1 className="font-bold text-2xl text-white">Ganti Password</h1>
+      <div className="bg-gradient-to-br from-cyan-500 to-teal-600 p-7 mb-6 py-5 px-5 shadow-inner rounded-md"
+        data-aos="fade-left">
+        <h1 className="font-bold text-2xl text-white">change Password</h1>
       </div>
 
       <div className="grid xl:grid-cols-3 grid-cols-1">

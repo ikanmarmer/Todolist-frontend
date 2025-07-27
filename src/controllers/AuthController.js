@@ -35,17 +35,26 @@ const AuthController = create((set) => ({
   },
 
   login: async (email, password, navigate) => {
-    try {
-      const res = await axios.post(`${baseUrl}/auth/login`, {
-        email,
-        password,
-      });
-      const { token, user } = res.data;
-      set({ token, user, error: null });
-      localStorage.setItem("user_status", user.status);
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
-
+  try {
+    const res = await axios.post(`${baseUrl}/auth/login`, { email, password });
+    const { token, user } = res.data;
+    
+    // PERBAIKAN: Format ulang data avatar
+    // const formattedUser = {
+    //   ...user,
+    //   avatar: user.avatar ? `avatars/${user.avatar}` : null
+    // };
+    
+    set({ 
+      token, 
+      user: {
+        ...user,
+        avatar: user.avatar || null // Pastikan avatar ada
+      },
+      error: null 
+    });
+    
+    localStorage.setItem("user", JSON.stringify(user));
       navigate("/Dashboard");
     } catch (err) {
       set({ error: err.response?.data?.message || "Terjadi kesalahan" });

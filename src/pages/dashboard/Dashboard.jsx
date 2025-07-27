@@ -18,28 +18,34 @@ function Dashboard() {
     };
 
     fetchTask();
-  }, [getTask, setLoading]);
+  }, [getTask]);
 
   return (
     <>
-      <div className="bg-gradient-to-br from-cyan-500 to-teal-600 p-7 mb-6 py-5 px-5 shadow-inner rounded-md">
+      <div className="bg-gradient-to-br from-cyan-500 to-teal-600 p-7 mb-6 shadow-inner rounded-md"
+        data-aos="fade-left">
         <h1 className="font-bold text-2xl text-white">Dashboard</h1>
       </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         <Link
           to="/todo-list"
-          className="bg-gray-900 p-6 rounded-md hover:shadow-md transition"
+          className="bg-gradient-to-br from-cyan-500 to-teal-600 p-7 shadow-inner rounded-md hover:shadow-md transition"
           data-aos="fade-up"
         >
-          <h2 className="text-white text-lg mb-2">Total Todos</h2>
+          {/* Label “Jumlah Todos” */}
+          <h2 className="text-lg font-semibold mb-2 text-yellow-200">
+            Jumlah Todos
+          </h2>
+
+          {/* Konten angka / loader */}
           {loading ? (
-            <p className="text-3xl font-bold text-yellow-400">
-              <span className="loading loading-spinner text-yellow-400 text-3xl"></span>{" "}
-              <i className="fa-regular fa-notebook"></i>
-            </p>
+            // skeleton box dengan animate-pulse
+            <div className="h-12 w-24 bg-white/30 rounded-lg animate-pulse"></div>
           ) : (
-            <p className="text-3xl font-bold text-yellow-400">
-              {task.length} <i className="fa-regular fa-notebook"></i>
+            // angka nyata
+            <p className="text-4xl font-bold text-yellow-300">
+              {task.length}
             </p>
           )}
         </Link>

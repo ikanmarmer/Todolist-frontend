@@ -24,15 +24,18 @@ function Plans() {
   }, []);
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      <h1 className="text-2xl font-bold text-white mb-6">
+    <div className="">
+      <div className="bg-gradient-to-br from-cyan-500 to-teal-600 p-7 mb-6 shadow-inner rounded-md"
+      data-aos="fade-left">
+      <h1 className="text-2xl font-bold text-white">
         Pilih Paket Premium
       </h1>
+      </div>
       <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
         {plans.map((plan) => (
           <div
             key={plan.id}
-            className="bg-gray-900 text-white rounded-lg shadow-md p-6"
+            className="bg-gradient-to-br from-cyan-500 to-teal-600 text-white rounded-lg shadow-md p-6"
           >
             <h2 className="text-xl font-semibold mb-2">{plan.name}</h2>
             <p className="text-gray-300 mb-4">{plan.description}</p>
@@ -41,7 +44,7 @@ function Plans() {
             </p>
             <button
               onClick={() => payWithMidtrans(plan.id)}
-              className="bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-2 rounded"
+              className="bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl active:scale-95 shadow-lg border-2 border-yellow-400"
             >
               Pilih Plan Ini
             </button>

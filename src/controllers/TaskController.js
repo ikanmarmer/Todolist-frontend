@@ -25,24 +25,28 @@ const TaskController = create((set) => ({
     }
   },
 
-storeTask: async (formData, navigate, id = null) => {
+  storeTask: async (formData, navigate, id = null) => {
   try {
     const token = localStorage.getItem("token");
+    // Sesuaikan URL dengan route-list: POST /tasks  untuk create, PUT /tasks/{id} untuk update
+    const url = id
+      ? `${api}/tasks/${id}`   // update
+      : `${api}/tasks`;        // create
+    const method = id ? "put" : "post";
 
+    // Kalau tetap ingin pakai POST + _method=PUT, boleh; 
+    // tapi di sini kita langsung pakai PUT supaya lebih idiomatik
     if (id) {
-      formData.append("_method", "PUT");
+      // hapus baris formData.append("_method","PUT");  // tidak perlu kalau pakai axios.put
     }
 
-    const res = await axios.post(
-      id ? `${api}/task/update/${id}` : `${api}/task/store`,
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const res = await axios[method](url, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
     set({
       success: res.data.message,
       error: null,
@@ -51,10 +55,11 @@ storeTask: async (formData, navigate, id = null) => {
   } catch (err) {
     const message =
       err.response?.data?.message ||
-      "Failed to save task. Please try again"; // Terjemahan
+      "Failed to save task. Please try again";
     set({ error: message, success: null });
   }
   },
+
 
   deleteTask: async (id) => {
     try {

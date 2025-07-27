@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import AuthController from '../controllers/AuthController';
+import AuthController from "../controllers/AuthController";
 import Swal from 'sweetalert2';
 
 export default function Sidebar({ isOpen, onClose }) {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const [avatarPreview, setAvatarPreview] = useState(null);
 
   // Tailwind classes
   const activeClass = 'flex items-center gap-3 px-4 py-2 rounded-lg mb-2 bg-gradient-to-r from-teal-600 to-cyan-700 hover:from-teal-700 hover:to-cyan-800 text-white font-bold rounded-lg transition-all duration-30 transform hover:scale-105 hover:shadow-xl active:scale-95 shadow-lg border border-teal-500 hover:border-teal-400';
@@ -14,6 +16,14 @@ export default function Sidebar({ isOpen, onClose }) {
   // Auth state
   const logout = AuthController((state) => state.logout);
   const user = AuthController((state) => state.user);
+
+  useEffect(() => {
+    if (user?.avatar) {
+      setAvatarPreview(user.avatar);
+    } else {
+      setAvatarPreview(null);
+    }
+  }, [user]);
 
   const handleLogout = async () => {
     // Tampilkan konfirmasi sebelum logout
@@ -81,17 +91,22 @@ export default function Sidebar({ isOpen, onClose }) {
           </button>
         </div>
         {/* Profile */}
-        <div className="flex flex-col items-center px-4 mb-6 ">
-          <img
-            src={
-              user?.avatar
-                ? `${import.meta.env.VITE_API_URL_IMAGE}/storage/${user.avatar}`
-                : '/src/assets/profile-default.png'
-            }
-            alt="Profile"
-            className="w-20 h-20 rounded-full object-cover border-2 border-yellow-400 mb-2"
-          />
-          <p className="text-black font-medium text-sm">Hallo, {user?.name || ''}</p>
+        <div className="flex flex-col items-center px-4 mb-6">
+          <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-black-400 mb-2 bg-gray-200 flex items-center justify-center">
+            <img
+              src={avatarPreview || "/src/assets/profile-default.png"}
+              alt="Profile"
+              className={`
+                object-contain w-full h-full
+              `}
+              // Pilih salah satu opsi di bawah ini sesuai kebutuhan:
+                // object-cover w-full h-full   // Untuk fill (cover) - default
+                // object-contain w-full h-full   // Untuk fit (contain)
+                // object-fill w-full h-full      // Untuk stretch (fill)
+                // object-scale-down w-full h-full // Untuk scale down
+            />
+          </div>         
+    <p className="text-black font-medium text-sm">Hallo, {user?.name || ''}</p>
         </div>
 
         {/* Navigation Links */}

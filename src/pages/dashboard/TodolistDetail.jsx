@@ -182,20 +182,33 @@ function TodoListDetail() {
 
   return (
     <>
-      <div className="bg-gray-900 mb-6 py-5 px-5 rounded-md">
+      <div className="bg-gradient-to-br from-cyan-500 to-teal-600 p-7 mb-6 py-5 px-5 shadow-inner rounded-md"
+        data-aos="fade-left">
         <h1 className="font-bold text-2xl text-white">Todo List Detail</h1>
       </div>
 
       <button
         onClick={openAddModal}
-        className="font-medium bg-yellow-400 hover:bg-yellow-500 text-white text-lg px-4 py-2 rounded-md mb-6"
+        className=" bg-gradient-to-r from-teal-600 to-cyan-700 
+              hover:from-teal-700 hover:to-cyan-800 text-white 
+              font-bold py-2 px-4 rounded-lg transition-all duration-300 
+              transform hover:scale-105 hover:shadow-xl active:scale-95 
+              shadow-lg border border-teal-500 hover:border-teal-400 mb-6"
+              data-aos="fade-left"
       >
         Tambah Subtask
       </button>
 
       {isModalOpen && (
-        <div className="fixed px-6 inset-0 bg-black/40 flex backdrop-blur items-center justify-center z-50">
-          <div className="bg-gray-900 p-6 rounded-md shadow-lg w-full max-w-md">
+        <div className="fixed px-6 inset-0  bg-gradient-to-r from-teal-600 to-cyan-700 
+              hover:from-teal-700 hover:to-cyan-800 text-white 
+              font-bold py-3  rounded-lg
+              shadow-lg border  flex backdrop-blur items-center justify-center z-50"
+              >
+          <div className="w-full max-w-md bg-gradient-to-r from-teal-600 to-cyan-700  text-white 
+              font-bold py-3 px-6 rounded-lg transition-all duration-300 
+              transform hover:shadow-xl
+              shadow-lg border border-teal-500 hover:border-teal-400">
             <h2 className="text-xl font-bold mb-4 text-white">
               {isEditing ? "Edit Subtask" : "Tambah Subtask"}
             </h2>
@@ -203,21 +216,31 @@ function TodoListDetail() {
               type="text"
               value={form.title}
               onChange={(e) => setForm({ title: e.target.value })}
-              className="w-full border border-gray-300 p-2 rounded mb-4 text-white"
-              placeholder="Judul subtask"
-            />
+              className="input validator w-full px-4 py-3 bg-gradient-to-r from-teal-400 to-cyan-400 border-2 
+                border-teal-300 rounded-lg text-white placeholder-teal-100 focus:outline-none 
+                focus:ring-4 focus:ring-cyan-200 focus:border-cyan-200 focus:scale-105 transition-all 
+                duration-300 shadow-inset hover:shadow-lg hover:from-teal-350 hover:to-cyan-350 mb-4"
+                placeholder="Subtask Title"
+              />
             <div className="flex justify-end space-x-2">
               <button
-                onClick={() => setIsModalOpen(false)}
-                className="bg-gray-300 text-gray-700 px-4 py-2 rounded"
+                onClick={handleSubmit}
+                className="bg-gradient-to-r from-teal-600 to-cyan-700 
+                  hover:from-teal-700 hover:to-cyan-800 text-white 
+                    font-medium px-2 py-1 rounded-lg transition-all duration-300 
+                    transform hover:scale-105 hover:shadow-xl active:scale-95 
+                    shadow-lg border border-teal-500 hover:border-teal-400"
               >
-                Batal
+                Add
               </button>
               <button
-                onClick={handleSubmit}
-                className="bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-2 rounded"
+                onClick={() => setIsModalOpen(false)}
+                className="bg-gray-600 hover:bg-gray-700 text-white 
+                    font-medium px-2 py-1 rounded-lg transition-all duration-300 
+                    transform hover:scale-105 hover:shadow-xl active:scale-95 
+                    shadow-lg border:border-gray-500 hover:border-gray-400"
               >
-                Simpan
+                Cancel
               </button>
             </div>
           </div>
@@ -229,7 +252,7 @@ function TodoListDetail() {
           {columns.map((col) => (
             <div
               key={col.key}
-              className="bg-gray-900 rounded-md p-5 min-h-[200px] flex flex-col"
+              className="bg-gradient-to-br from-cyan-500 to-teal-600 rounded-md p-5 min-h-[200px] flex flex-col"
             >
               <h2 className="font-semibold text-center text-xl text-white mb-3">
                 {col.title}

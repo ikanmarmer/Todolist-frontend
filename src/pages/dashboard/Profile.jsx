@@ -14,24 +14,21 @@ function Profile() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUser = async () => {
+        const fetchUser = async () => {
       try {
         const token = localStorage.getItem("token");
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/user/me`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` }
         });
 
         setUser(res.data);
+        // PERBAIKAN: Bangun URL dengan benar
         if (res.data.avatar) {
-          setAvatarPreview(
-            `${import.meta.env.VITE_API_URL_IMAGE}/storage/${res.data.avatar}`
-          );
-        }
-      } catch (err) {
-        console.error("Gagal memuat profil", err);
-      } finally {
+      setAvatarPreview(res.data.avatar);
+    }
+  } catch (err) {
+    console.error("Gagal memuat profil", err);
+  } finally {
         setLoading(false);
       }
     };
@@ -47,24 +44,16 @@ function Profile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    Swal.fire({
-      title: "Menyimpan...",
-      text: "Mohon tunggu sebentar",
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
+    Swal.showLoading();
 
     try {
       const token = localStorage.getItem("token");
       const formData = new FormData();
       formData.append("name", user.name);
       formData.append("email", user.email);
-      if (avatarFile) {
-        formData.append("avatar", avatarFile);
-      }
+      if (avatarFile) formData.append("avatar", avatarFile);
 
+      // PERBAIKAN: Gunakan PUT request
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/user/update`,
         formData,
@@ -76,70 +65,55 @@ function Profile() {
         }
       );
 
+      // PERBAIKAN: Format ulang data user
       const updatedUser = response.data.user;
-
+setUser(updatedUser);
+setAvatarPreview(updatedUser.avatar || null);
       localStorage.setItem("user", JSON.stringify(updatedUser));
-      const updateUser = AuthController.getState().setUser;
-      updateUser(updatedUser);
+      AuthController.getState().setUser(updatedUser);
 
-      Swal.fire({
-        icon: "success",
-        title: "Berhasil",
-        text: "Profile berhasil di perbarui",
-      });
-    } catch {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: "Terjadi kesalahan, coba lagi nanti",
-      });
+      // PERBAIKAN: Update avatar preview
+      if (response.data.user.avatar) {
+        setAvatarPreview(
+          `${import.meta.env.VITE_API_URL_IMAGE}/storage/avatars/${response.data.user.avatar}`
+        );
+      } else {
+        setAvatarPreview(null);
+      }
+
+      Swal.fire("Berhasil", "Profile berhasil di perbarui", "success");
+    } catch (error) {
+      // PERBAIKAN: Error handling lebih baik
+      const errorMsg = error.response?.data?.message || "Terjadi kesalahan";
+      Swal.fire("Gagal", errorMsg, "error");
     }
   };
 
   const handleDeleteAvatar = async () => {
-    Swal.fire({
-      title: "Menghapus...",
-      text: "Mohon tunggu sebentar",
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
+    Swal.showLoading();
     try {
       const token = localStorage.getItem("token");
       await axios.delete(`${import.meta.env.VITE_API_URL}/user/delete-avatar`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` }
       });
 
-      const currentUser = AuthController.getState().user;
-      const updatedUser = { ...currentUser, avatar: null };
-
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-      const updateUser = AuthController.getState().setUser;
-      updateUser(updatedUser);
-
+      const updatedUser = { ...user, avatar: null };
+      setUser(updatedUser);
       setAvatarPreview(null);
-      setAvatarFile(null);
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      AuthController.getState().setUser(updatedUser);
 
-      Swal.fire({
-        icon: "success",
-        title: "Berhasil",
-        text: "Avatar berhasil dihapus",
-      });
-    } catch {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: "Terjadi kesalahan, coba lagi nanti",
-      });
+      Swal.fire("Berhasil", "Avatar berhasil dihapus", "success");
+    } catch (error) {
+      Swal.fire("Gagal", "Terjadi kesalahan", "error");
     }
   };
 
+
   return (
     <>
-      <div className="bg-gradient-to-br from-cyan-500 to-teal-600 p-7 mb-6 py-5 px-5 shadow-inner rounded-md">
+      <div className="bg-gradient-to-br from-cyan-500 to-teal-600 p-7 mb-6 py-5 px-5 shadow-inner rounded-md"
+        data-aos="fade-left">
         <h1 className="font-bold text-2xl text-white">My Profile</h1>
       </div>
 
@@ -149,7 +123,7 @@ function Profile() {
           data-aos="fade-up"
         >
           {loading ? (
-            <span className="w-12 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></span>
+            <span className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></span>
           ) : (
             <form onSubmit={handleSubmit} className="w-full">
               <div className="mb-3">
@@ -195,16 +169,23 @@ function Profile() {
               <div className="mb-3 flex space-x-3">
                 <button
                   type="submit"
-                  className="bg-yellow-400 hover:bg-yellow-500 text-white font-medium transition-colors px-3 py-1 rounded-sm"
+                  className="bg-gradient-to-r from-teal-600 to-cyan-700 
+                  hover:from-teal-700 hover:to-cyan-800 text-white 
+                    font-medium px-2 py-1 rounded-lg transition-all duration-300 
+                    transform hover:scale-105 hover:shadow-xl active:scale-95 
+                    shadow-lg border border-teal-500 hover:border-teal-400"
                 >
                   Save Changes
                 </button>
                 <button
                   type="button"
                   onClick={handleDeleteAvatar}
-                  className="bg-gray-600 hover:bg-gray-700 text-white font-medium transition-colors px-3 py-1 rounded-sm"
+                  className="bg-gray-600 hover:bg-gray-700 text-white 
+                    font-medium px-2 py-1 rounded-lg transition-all duration-300 
+                    transform hover:scale-105 hover:shadow-xl active:scale-95 
+                    shadow-lg border:border-gray-500 hover:border-gray-400"
                 >
-                  Delete Avatar
+                  Cancel
                 </button>
               </div>
             </form>
