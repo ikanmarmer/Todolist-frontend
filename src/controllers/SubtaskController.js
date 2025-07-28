@@ -13,11 +13,10 @@ const SubtaskController = create((set) => ({
     try {
       const token = localStorage.getItem("token");
 
-      const res = await axios.get(`${api}/subtasks?task_id=${taskId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.get(
+        `${api}/tasks/${taskId}/subtasks`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
       set({
         subtasks: res.data,
@@ -36,11 +35,11 @@ const SubtaskController = create((set) => ({
     try {
       const token = localStorage.getItem("token");
 
-      const res = await axios.post(`${api}/subtasks?task_id=${taskId}`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.post(
+        `${api}/tasks/${taskId}/subtasks`,
+        data,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
       set((state) => ({
         subtasks: [...state.subtasks, res.data],
@@ -48,6 +47,7 @@ const SubtaskController = create((set) => ({
         error: null,
       }));
     } catch (err) {
+      console.error("Create subtask error:", err.response?.data);
       const message =
         err.response?.data?.message || "Gagal menambahkan subtask";
       set({ error: message });
