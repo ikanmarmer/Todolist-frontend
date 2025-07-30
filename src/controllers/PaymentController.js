@@ -89,7 +89,9 @@ const PaymentController = () => {
 
       return res.data.order;
     } catch (error) {
-      console.error("Gagal membuat order:", error);
+      console.error("Gagal membuat order:", error.response
+    ? JSON.stringify(error.response.data, null, 2)
+    : error.message);
       
       // Handle specific error cases
       if (error.response?.status === 400) {
@@ -302,7 +304,7 @@ const PaymentController = () => {
       }
     } catch (err) {
       Swal.close();
-      console.error("DETAIL ERROR:", err?.response?.data || err);
+      console.error("DETAIL ERROR:", JSON.stringify(err.response?.data, null, 2));
       
       if (!err.response) {
         // Network or connection error
@@ -314,6 +316,8 @@ const PaymentController = () => {
       }
       // Other errors are already handled in createOrder
     }
+
+    
   };
 
   return {

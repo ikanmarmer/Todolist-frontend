@@ -4,6 +4,23 @@ import PaymentController from "../../controllers/PaymentController";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
+function useInView(threshold = 0.1) {
+  const [ref, setRef] = useState(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    if (!ref) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold }
+    );
+    obs.observe(ref);
+    return () => obs.disconnect();
+  }, [ref, threshold]);
+
+  return [ref, inView];
+}
+
 function TodoList() {
   const [modal, setModal] = useState(false);
   const [editId, setEditId] = useState(null);
@@ -13,11 +30,14 @@ function TodoList() {
     description: "",
     deadline: "",
     video: "",
-    image: null,
+    image: "",
   });
+  const [selectedIds, setSelectedIds] = useState([]);
 
-  const { task, getTask, storeTask, clearMessage, deleteTask } =
+  const { task, user, getTask, storeTask, clearMessage, deleteTask, plans, fetchUser, fetchPlans} =
     TaskController();
+
+    
 
   const handleStoreTask = async (e) => {
     e.preventDefault();
@@ -43,7 +63,7 @@ function TodoList() {
         description: "",
         deadline: "",
         video: "",
-        image: null,
+        image: "",
       });
       setEditId(null);
       setModal(false);
@@ -64,6 +84,8 @@ function TodoList() {
   };
 
   useEffect(() => {
+    fetchUser();
+    fetchPlans();
     const fetchData = async () => {
       setLoading(true);
 
@@ -79,9 +101,13 @@ function TodoList() {
     fetchData();
   }, [getTask]);
 
+  if (!user || !Array.isArray(plans)) {
+    return <div>Loading…</div>;
+    }
+
   const extractYouTubeId = (url) => {
     const match = url.match(
-      /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/))([\w-]{11})/
+      /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/|live\/))([\w-]{11})/
     );
     return match ? match[1] : null;
   };
@@ -95,12 +121,25 @@ function TodoList() {
     clearMessage();
   };
 
+  const currentPlan = Array.isArray(plans) && user
+  ? plans.find(p => p.id === user.plan_id) 
+  : null;
+
+
+
+
+  const {
+    name: planName,
+    tasks_limit: limit
+  } = (plans || [])
+       .find(p => p.id === user.plan_id)
+    || { name: "Unknown", tasks_limit: 0 };
+
   const openAddModal = () => {
-    const isPremium = localStorage.getItem("user_status") === "premium";
-    if (!isPremium && task.length >= 1) {
+    if (limit > 0 && task.length >= limit) {
       Swal.fire({
-        title: "Upgrade ke Premium",
-        text: "Akun gratis hanya bisa menambahkan 1 todo. Upgrade ke premium sekarang?",
+        title: `Upgrade Plan (${planName})`,
+        text: `Plan kamu (“${planName}”) hanya mengizinkan ${limit} todo. Mau upgrade?`,
         icon: "info",
         showCancelButton: true,
         confirmButtonText: "Lihat Plan",
@@ -109,17 +148,9 @@ function TodoList() {
           window.location.href = "/plans";
         }
       });
-
       return;
     }
-
-    setForm({
-      title: "",
-      description: "",
-      deadline: "",
-      video: "",
-      image: null,
-    });
+    setForm({ title: "", description: "", deadline: "", video: "", image: "" });
     setEditId(null);
     setModal(true);
   };
@@ -132,7 +163,7 @@ function TodoList() {
       description: task.description,
       deadline: task.deadline,
       video: task.video || "",
-      image: null,
+      image: task.image || "",
     });
     setModal(true);
   };
@@ -176,6 +207,34 @@ function TodoList() {
     }
   };
 
+  const toggleSelect = (id) => {
+    setSelectedIds(prev =>
+      prev.includes(id)
+        ? prev.filter(x => x !== id)
+        : [...prev, id]
+    );
+  };
+
+  const handleBulkDelete = async () => {
+    const result = await Swal.fire({
+      title: `Hapus ${selectedIds.length} todo?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya, hapus semua",
+    });
+    if (result.isConfirmed) {
+      Swal.fire({ title: "Menghapus…", didOpen: Swal.showLoading, allowOutsideClick: false });
+      try {
+        await Promise.all(selectedIds.map(id => deleteTask(id)));
+        await getTask();
+        setSelectedIds([]);
+        Swal.fire("Sukses", "Todo yang dipilih berhasil dihapus", "success");
+      } catch {
+        Swal.fire("Gagal", "Terjadi kesalahan saat hapus massal", "error");
+      }
+    }
+  };
+
   return (
     <>
       <div className="bg-gradient-to-br from-cyan-500 to-teal-600 p-7 mb-6 py-5 px-5 shadow-inner rounded-md"
@@ -183,16 +242,32 @@ function TodoList() {
         <h1 className="font-bold text-2xl text-white">Todo List</h1>
       </div>
 
-      <button
-        className="bg-gradient-to-r from-teal-600 to-cyan-700 
-              hover:from-teal-700 hover:to-cyan-800 text-white 
-              font-bold py-3 px-6 rounded-lg transition-all duration-300 
-              transform hover:scale-105 hover:shadow-xl active:scale-95 
-              shadow-lg border border-teal-500 hover:border-teal-400"
-        onClick={() => openAddModal()}
-      >
-        Add Todo
-      </button>
+        <button
+          className="bg-gradient-to-r from-teal-600 to-cyan-700 
+                hover:from-teal-700 hover:to-cyan-800 text-white 
+                font-bold py-3 px-6 rounded-lg transition-all duration-300 
+                transform hover:scale-105 hover:shadow-xl active:scale-95 
+                shadow-lg border border-teal-500 hover:border-teal-400"
+          onClick={() => openAddModal()}
+        >
+          Add Todo
+        </button>
+
+        {selectedIds.length > 0 && (
+          <div className="mt-4 p-4 bg-white/30 backdrop-blur rounded-lg flex items-center gap-4">
+            <i className="fa-solid fa-trash-can text-red-600 text-2xl"></i>
+            <span className="font-medium text-white">
+              {selectedIds.length} item dipilih
+            </span>
+            <button 
+              onClick={handleBulkDelete}
+              className="ml-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
+            >
+              Hapus Semua
+            </button>
+          </div>
+        )}  
+
       {modal && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-6 backdrop-blur">
           <div
@@ -297,19 +372,37 @@ function TodoList() {
         </div>
       ) : (
               <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-6 gap-6">
-        {task.map((task) => (
+        {task.map((task) => {
+          const isSelected = selectedIds.includes(task.id);
+          return(
           <div
             key={task.id}
-            className="
+            className={`
               bg-gradient-to-br from-cyan-500 to-teal-600
               p-7 mb-6 py-5 px-5
               shadow-inner rounded-md
               hover:shadow-lg transition-shadow duration-300
               cursor-pointer
-            "
+              ${isSelected ? "ring-4 ring-red-400" : ""}
+            `}
             data-aos="fade-up"
           >
             <div className="flex justify-between">
+              <button
+                onClick={() => toggleSelect(task.id)}
+                className="text-white text-xl mr-3 focus:outline-none"
+                aria-label={isSelected ? "Unselect" : "Select"}
+              >
+                <i
+                  className={`${
+                    isSelected
+                      ? "fa-solid fa-square-check"
+                      : "fa-regular fa-square"
+                  }`}
+                />
+              </button>
+
+
               <Link
                 to={`/todo-list-detail/${task.id}`}
                 className="text-xl font-semibold mb-1 text-white hover:underline w-full"
@@ -318,6 +411,7 @@ function TodoList() {
               </Link>
 
               <div className="flex space-x-3">
+
                 <button
                   className="text-lg font-medium text-white/90 hover:text-white"
                   onClick={() => openEditModal(task)}
@@ -328,7 +422,7 @@ function TodoList() {
                   className="text-lg font-medium text-red-300 hover:text-red-400"
                   onClick={() => handleDelete(task.id)}
                 >
-                  <i className="fa-regular fa-trash-alt"></i>
+                  <i className="fas fa-inbox "></i>
                 </button>
               </div>
             </div>
@@ -365,9 +459,10 @@ function TodoList() {
               )}
             </Link>
           </div>
-        ))}
+          
+)})}
       </div>
-
+      
       )}
     </>
   );

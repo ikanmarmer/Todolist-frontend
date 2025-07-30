@@ -1,13 +1,13 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
-import PageTitle from "../routes/PageTitle";
+import TitleRoute from "../routes/TitleRoute";
 import { useEffect, useState } from "react";
 import Aos from 'aos';
 import AuthController from "../controllers/AuthController";
 import 'aos/dist/aos.css';
 
 function DashboardLayout() {
-  PageTitle();
+  TitleRoute();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [forceMobileNav, setForceMobileNav] = useState(false);
   const [isMobile, setIsMobile] = useState(false);

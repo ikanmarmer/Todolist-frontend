@@ -4,6 +4,7 @@ import { create } from "zustand";
 const api = import.meta.env.VITE_API_URL;
 
 const TaskController = create((set) => ({
+  plans: [],
   task: [],
   error: null,
   user: null,
@@ -15,7 +16,9 @@ const TaskController = create((set) => ({
       const res = await axios.get(`${api}/user/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      set({ user: res.data, error: null });
+      set({ user: res.data, 
+        error: null,
+        tasks_limit: res.data.tasks_limit ?? 0,});
     } catch (err) {
       set({
         user: null,
@@ -23,6 +26,20 @@ const TaskController = create((set) => ({
       });
     }
   },
+
+  fetchPlans: async () => {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await axios.get(`${api}/plans`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    set({ plans: res.data });
+  } catch (err) {
+    console.error("Gagal fetch plans", err);
+    set({ plans: [] });
+  }
+  },
+
 
   getTask: async () => {
     try {

@@ -1,27 +1,27 @@
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+// import { useEffect } from "react";
+// import { useLocation } from "react-router-dom";
 
-function PageTitle() {
-    const location = useLocation();
+// function PageTitle() {
+//     const location = useLocation();
 
-    useEffect(() => {
-        const titles = {
-            "/": "Home | TodoBee",
-            "/about": "About | TodoBee",
-            "/contact": "Contact | TodoBee",
-            "/login": "Login | TodoBee",
-            "/register": "Register | TodoBee",
-            // "/dashboard": "Dashboard | TodoBee",
-            // "/todo-list": "Todo List | TodoBee",
-            // "/todo-list-detail": "Todo List Detail | TodoBee",
-            // "/setting": "Setting | TodoBee",
-            // "/plans": "Plans | TodoBee",
-        };
+//     useEffect(() => {
+//         const titles = {
+//             "/": "Home | TodoBee",
+//             "/about": "About | TodoBee",
+//             "/contact": "Contact | TodoBee",
+//             "/login": "Login | TodoBee",
+//             "/register": "Register | TodoBee",
+//             // "/dashboard": "Dashboard | TodoBee",
+//             // "/todo-list": "Todo List | TodoBee",
+//             // "/todo-list-detail": "Todo List Detail | TodoBee",
+//             // "/setting": "Setting | TodoBee",
+//             // "/plans": "Plans | TodoBee",
+//         };
 
-        document.title = titles[location.pathname] || "TodoBee";
-    }, [location]);
+//         document.title = titles[location.pathname] || "TodoList";
+//     }, [location]);
 
-    return null;
-};
+//     return null;
+// };
 
-export default PageTitle;
+// export default PageTitle;

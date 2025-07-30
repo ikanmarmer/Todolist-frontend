@@ -6,7 +6,7 @@ import { useState } from "react";
 
 
 function Register(){
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [form, setForm] = useState({ name: "", email: "", password: "",});
   const register = AuthController((state) => state.register);
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ function Register(){
   });
 
   try {
-    await register(form, navigate);
+    const response = await register(form, navigate);
     
     Swal.fire({
       icon: "success",

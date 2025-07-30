@@ -11,7 +11,12 @@ function TitleRoute(){
             "/Contact": "Contact ",
             "/Login": "Login ",
             "/Register": "Register ",
-            "/Dashboard": "Dashboard "
+            "/Dashboard": "Dashboard ",
+            "/todo-list": "Todo List ",
+            "/todo-list-detail": "Todo List Detail ",
+            "/profile": "Profile ",
+            "/setting": "Setting ",
+            "/plans": "Plans ",
         };
 
         document.title = titles[location.pathname];

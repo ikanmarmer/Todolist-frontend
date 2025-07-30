@@ -13,7 +13,7 @@ const AuthController = create((set, get) => ({
   user: savedUser,
   token: savedToken || null,
   error: null,
-
+  
   setUser: (user) => {
     // Store user in localStorage when setting
     localStorage.setItem("user", JSON.stringify(user));
@@ -26,7 +26,7 @@ const AuthController = create((set, get) => ({
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const res = await axios.get(`${baseUrl}/auth/me`, {
+      const res = await axios.get(`${baseUrl}/user/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -133,3 +133,4 @@ const AuthController = create((set, get) => ({
 }));
 
 export default AuthController;
+
